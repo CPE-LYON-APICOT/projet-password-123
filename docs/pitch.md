@@ -34,7 +34,7 @@ Vous restez maître de vos informations. Vous pouvez importer facilement vos mot
 
 L'application agit comme un conseiller en sécurité. Elle analyse votre coffre-fort et vous alerte si l'un de vos mots de passe est trop simple ou réutilisé, vous aidant ainsi à renforcer vos points faibles.
 
-## Évolutions envisagées
+## Évolutions envisagées 
 
 * **Générateur de codes de sécurité (A2F) :** Intégration d'un système de codes temporaires directement dans l'application pour sécuriser vos comptes sensibles sans application tierce.
 * **Identités éphémères (Alias) :** Possibilité de créer des adresses e-mail factices pour s'inscrire sur des sites sans jamais dévoiler votre véritable adresse e-mail personnelle.
