@@ -14,7 +14,7 @@ L'application s'adresse à tous ceux qui souhaitent naviguer sur Internet en tou
 
 Accédez à l'intégralité de vos comptes avec un seul et unique "Mot de passe Maître". C'est la seule clé que vous devez retenir. Une fois connecté, Password@123 déverrouille tous vos autres accès instantanément, vous offrant une porte d'entrée fluide vers tous vos services préférés.
 
-### Fonctionnalité 2 — *Cryptage*
+### Fonctionnalité 2 — *Chiffrement*
 
 Toutes vos informations sont transformées en un code indéchiffrable avant même d'être enregistrées. Seul votre mot de passe maître peut "traduire" ces données. Cela signifie que même en cas de tentative d'intrusion, vos mots de passe restent totalement illisibles pour quiconque.
 
