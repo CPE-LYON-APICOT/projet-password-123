@@ -141,7 +141,7 @@ User "1" -- "1" Vault : possède
 SessionManager ..> Vault : déverrouille
 Vault "1" *-- "many" VaultItem : contient
 VaultItemFactory ..> VaultItem : crée
-PasswordItem o-- EncryptionStrategy : utilise
+VaultItem o-- EncryptionStrategy : utilise
 PasswordGenerator +-- Builder
 
 @enduml
