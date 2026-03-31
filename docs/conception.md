@@ -84,6 +84,7 @@ class SessionManager {
 class Vault {
     - ownerId: UUID
     - items: List<VaultItem>
+    + loadAndDecryptAll(encryptedData)
 }
 
 ' --- Design Pattern: Factory (Vault Items) ---
@@ -151,18 +152,18 @@ PasswordGenerator +-- Builder
 
 ```plantuml
 @startuml
-title Flux d'Authentification et d'Accès aux Données - Password@123
+title Flux Password@123 - Déchiffrement Global au Chargement
 
 actor Utilisateur
-participant "UI (Interface)" as UI
+participant "UI" as UI
 participant "SessionManager" as Session
 participant "Persistence (DB)" as DB
 participant "Vault" as Vault
+participant "VaultItem" as Item
 participant "EncryptionStrategy" as Strategy
 
-== Phase 1 : Authentification & Initialisation ==
-
-Utilisateur -> UI : Saisit Email + Master Password
+== Phase 1 : Authentification & Génération de Clé ==
+Utilisateur -> UI : Saisit Identifiants + Master Password
 UI -> Session : login(email, password)
 activate Session
 
@@ -170,38 +171,44 @@ Session -> DB : getUser(email)
 activate DB
 return UserData (Hash + Salt)
 
-Session -> Session : Verify Password Hash
-Session -> Session : Derive DecryptionKey (PBKDF2/Argon2)
-
+Session -> Session : Verify Hash & Derive DecryptionKey
 Session --> UI : Auth Success
 deactivate Session
 
-== Phase 2 : Récupération du Coffre ==
-
+== Phase 2 : Chargement & Déchiffrement Massif ==
 UI -> DB : getEncryptedVault(userId)
 activate DB
-return EncryptedData
-UI -> Vault : load(EncryptedData)
+return List<EncryptedData>
+deactivate DB
 
-== Phase 3 : Consultation d'un Elément (Déchiffrement) ==
-
-Utilisateur -> UI : Sélectionne un "PasswordItem"
-UI -> Vault : getItemDetails(itemId)
+UI -> Vault : loadAndDecryptAll(EncryptedData)
 activate Vault
 
 Vault -> Session : getDecryptionKey()
 activate Session
 return DecryptionKey
 
-Vault -> Strategy : decrypt(encryptedData, key)
-activate Strategy
-return PlainText Password
-deactivate Strategy
+loop Pour chaque élément de la liste
+    Vault -> Strategy : decrypt(data, key)
+    activate Strategy
+    return plainTextData
+    deactivate Strategy
+    
+    Vault -> Item : new VaultItem(plainTextData)
+    activate Item
+    return ItemInstance
+end
 
-Vault --> UI : Clear Text Data
+Vault --> UI : Vault prêt (Items déchiffrés en mémoire)
 deactivate Vault
 
-UI -> Utilisateur : Affiche le mot de passe
+== Phase 3 : Consultation Instantanée ==
+Utilisateur -> UI : Clique sur un mot de passe ou une carte
+UI -> Vault : getItem(itemId)
+' Les données sont déjà en clair, pas d'appel à Strategy
+Vault --> UI : Retourne l'objet déjà déchiffré
+UI -> Utilisateur : Affiche les informations sans délai
+
 @enduml
 ```
 
