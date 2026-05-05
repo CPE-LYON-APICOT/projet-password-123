@@ -30,13 +30,15 @@ import javafx.stage.Stage;
  *
  * <h2>Ce que fait cette classe :</h2>
  * <ol>
- *   <li>Crée l'injecteur Guice avec {@link AppModule} (vos bindings)</li>
- *   <li>Demande à Guice de construire le {@link GameEngine} avec toutes ses dépendances</li>
- *   <li>Crée la fenêtre JavaFX avec un Pane de 800×600</li>
- *   <li>Lance la boucle de jeu via {@code engine.start(gamePane)}</li>
+ * <li>Crée l'injecteur Guice avec {@link AppModule} (vos bindings)</li>
+ * <li>Demande à Guice de construire le {@link GameEngine} avec toutes ses
+ * dépendances</li>
+ * <li>Crée la fenêtre JavaFX avec un Pane de 800×600</li>
+ * <li>Lance la boucle de jeu via {@code engine.start(gamePane)}</li>
  * </ol>
  *
  * <h2>Flux d'injection Guice :</h2>
+ * 
  * <pre>
  *   App  →  Guice.createInjector(AppModule)
  *        →  injector.getInstance(GameEngine)
@@ -71,7 +73,7 @@ public class App extends Application {
         scene.setOnKeyPressed(e -> inputService.handleKeyPressed(e.getCode()));
         scene.setOnKeyReleased(e -> inputService.handleKeyReleased(e.getCode()));
 
-        stage.setTitle("Projet POO");
+        stage.setTitle("Password@123");
         stage.setScene(scene);
         stage.show();
 

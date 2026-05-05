@@ -25,3 +25,6 @@ desktop.ini
 
 # Gradle wrapper (optionnel, décommentez si vous ne versionnez pas le wrapper)
 # gradle/wrapper/gradle-wrapper.jar
+
+## enpeches de versionner les fichiers de stockage des données
+storage/*

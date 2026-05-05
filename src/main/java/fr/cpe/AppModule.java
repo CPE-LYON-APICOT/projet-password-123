@@ -1,47 +1,38 @@
 package fr.cpe;
 
-// ╔══════════════════════════════════════════════════════════════════════════════╗
-// ║                                                                            ║
-// ║   ✏️  FICHIER MODIFIABLE — C'est ici que vous configurez Guice             ║
-// ║                                                                            ║
-// ║   Quand vous créez une interface + une implémentation, déclarez            ║
-// ║   le binding ici pour que Guice sache quoi injecter.                       ║
-// ║                                                                            ║
-// ╚══════════════════════════════════════════════════════════════════════════════╝
-
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import fr.cpe.service.AES256Strategy;
+import fr.cpe.service.EncryptionStrategy;
+import fr.cpe.service.PasswordGenerator;
+import fr.cpe.service.SessionManager;
 
 /**
- * Module Guice — c'est ici que vous déclarez vos bindings (interface → implémentation).
+ * Module de configuration Guice.
  *
- * <h2>Quand ajouter un binding ?</h2>
- * <p>Dès que vous utilisez une <strong>interface</strong> comme type de dépendance.
- * Guice ne peut pas deviner quelle implémentation choisir tout seul.</p>
- *
- * <h2>Exemple concret :</h2>
- * <pre>
- *   // Vous avez créé :
- *   //   - interface CollisionStrategy { ... }
- *   //   - class SimpleCollision implements CollisionStrategy { ... }
- *   //
- *   // Dans configure(), ajoutez :
- *   bind(CollisionStrategy.class).to(SimpleCollision.class);
- *
- *   // Maintenant, partout où Guice voit @Inject CollisionStrategy,
- *   // il fournira une instance de SimpleCollision.
- * </pre>
- *
- * <h2>Classes concrètes :</h2>
- * <p>Si votre dépendance est une classe concrète (pas une interface),
- * Guice sait l'instancier tout seul — pas besoin de binding.</p>
+ * <p>C'est ici qu'on définit comment Guice doit instancier vos classes.</p>
  */
 public class AppModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        // Pas de binding pour l'instant : Guice sait instancier les classes concrètes
-        // tout seul (GameEngine, GameService) grâce à @Inject.
-        //
-        // Quand vous introduirez des interfaces, ajoutez vos bindings ici.
+        // Liaison de l'interface EncryptionStrategy vers son implémentation AES
+        bind(EncryptionStrategy.class).to(AES256Strategy.class);
+        
+        // SessionManager en Singleton
+        bind(SessionManager.class).asEagerSingleton();
+    }
+
+    /**
+     * Fournit une instance de PasswordGenerator configurée via son Builder.
+     */
+    @Provides
+    public PasswordGenerator providePasswordGenerator() {
+        return new PasswordGenerator.Builder()
+                .setLength(16)
+                .setUseUpper(true)
+                .setUseDigits(true)
+                .setUseSpecial(true)
+                .build();
     }
 }
