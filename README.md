@@ -1,13 +1,13 @@
 ---
 binome:
-  - nom: "Nom1"
-    prenom: "Prénom1"
-  - nom: "Nom2"
-    prenom: "Prénom2"
+  - nom: "LAGNEAU"
+    prenom: "Gregory"
+  - nom: "BERNARDON"
+    prenom: "Gael"
 ---
 
 # Projet POO — 3ICS
-\<Remplacez par le nom de votre projet\>
+\<password@123\>
  
 A la toute fin, brièvement, décrivez le ici, comme si c'était la page de présentation sur un store d'applications. 
 
